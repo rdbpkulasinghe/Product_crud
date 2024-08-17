@@ -35,16 +35,4 @@ This is a simple product management system built with the MERN (MongoDB, Express
   ```bash
     npm install
     npm run dev
-    
-
-
-
-
-
-
-
-
-   
-
-
-
+  
