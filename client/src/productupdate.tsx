@@ -11,6 +11,8 @@ function ProductUpdate() {
     const [Category, setCategory] = useState("");
     const [SKU, setSKU] = useState("");
     const [Image_upload, setImage_upload] = useState("");
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,16 +30,34 @@ function ProductUpdate() {
             .catch(err => console.log(err));
     }, [id]);
 
+    const validate = (): boolean => {
+        const newErrors: { [key: string]: string } = {};
+
+        if (!Productname) newErrors.Productname = "Product name is required";
+        if (!Description) newErrors.Description = "Description is required";
+        if (Price <= 0) newErrors.Price = "Price is required";
+        if (Quantity <= 0) newErrors.Quantity = "Quantity is required";
+        if (!Category) newErrors.Category = "Category is required";
+        if (!SKU) newErrors.SKU = "SKU is required";
+        if (!Image_upload) newErrors.Image_upload = "Image upload is required";
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
+
     const Update =(e: { preventDefault: () => void; }) =>{
         e.preventDefault();
+        if (validate()) {
         axios.put("http://localhost:3001/productupdate/"+id,{Productname,Description,Price,Quantity,Category,SKU,Image_upload})
         .then(result => {console.log(result)
             navigate('/')})
         .catch(err => console.log(err))
-
+        }
     }
+    
     return (
-        <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
+        <div className="d-flex vh-100 bg-dark-subtle justify-content-center align-items-center">
             <div className="w-50 bg-white rounded p-3">
                 <form onSubmit={Update}>
                     <h2>Update Product</h2>
@@ -51,6 +71,8 @@ function ProductUpdate() {
                             
                             onChange={(e) => setProductname(e.target.value)}
                         />
+                        {errors.Productname && <span className="text-danger">{errors.Productname}</span>}
+
                     </div>
                     <div className="mb-2">
                         <label htmlFor="description">Description</label>
@@ -61,6 +83,9 @@ function ProductUpdate() {
                             value={Description}
                             onChange={(e) => setDescription(e.target.value)}
                         />
+                        {errors.Description && <span className="text-danger">{errors.Description}</span>}
+
+
                     </div>
                     <div className="mb-2">
                         <label htmlFor="price">Price</label>
@@ -71,7 +96,10 @@ function ProductUpdate() {
                             value={Price}
                             onChange={(e) => setPrice(parseFloat(e.target.value))}
                         />
+                       {errors.Price && <span className="text-danger">{errors.Price}</span>}
+
                     </div>
+                    
                     <div className="mb-2">
                         <label htmlFor="quantity">Quantity</label>
                         <input
@@ -81,6 +109,8 @@ function ProductUpdate() {
                             value={Quantity}
                             onChange={(e) => setQuantity(parseFloat(e.target.value))}
                         />
+                        {errors.Quantity && <span className="text-danger">{errors.Quantity}</span>}
+
                     </div>
                     <div className="mb-2">
                         <label htmlFor="category">Category</label>
@@ -91,6 +121,8 @@ function ProductUpdate() {
                             value={Category}
                             onChange={(e) => setCategory(e.target.value)}
                         />
+                        {errors.Category && <span className="text-danger">{errors.Category}</span>}
+
                     </div>
                     <div className="mb-2">
                         <label htmlFor="sku">SKU</label>
@@ -101,6 +133,8 @@ function ProductUpdate() {
                             value={SKU}
                             onChange={(e) => setSKU(e.target.value)}
                         />
+                         {errors.SKU && <span className="text-danger">{errors.SKU}</span>}
+
                     </div>
                     <div className="mb-2">
                         <label htmlFor="image_upload">Image Upload</label>
@@ -111,6 +145,8 @@ function ProductUpdate() {
                             value={Image_upload}
                             onChange={(e) => setImage_upload(e.target.value)}
                         />
+                        {errors.Image_upload && <span className="text-danger">{errors.Image_upload}</span>}
+
                     </div>
                     <button className="btn btn-success">Update</button>
                 </form>
