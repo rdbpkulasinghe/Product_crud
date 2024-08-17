@@ -21,33 +21,22 @@ This is a simple product management system built with the MERN (MongoDB, Express
    git clone https://github.com/your-username/product-management-system.git
    cd product-management-system
 
-2. **Install backend dependencies**
-   ```bash
-   cd server
-   npm install
-
-4. **Install frontend dependencies**
-    ```bash
-    cd client
-    npm install
-
-5.**Set up environment variables**
-  -Create a '.env' file in the 'client' directory with the following:
-    ```bash
-    PORT=3001
-    MONGO_URI=mongodb://localhost:27017/productDB
-    
-6.**Start MongoDB**
+2.**Start MongoDB**
 
   Ensure MongoDB is running locally.
+  Cretae database with the name of product_management
 
-7.**Run the backend server**
- 
- ```bash
-  cd backend
-  npm start
+3. **Install dependencies and Run server**
+   ```bash
+   npm install
+   node index.js
 
-8.**Run the Frontend server**
+4. **Install dependencies and Run client**
+  ```bash
+    npm install
+    npm run dev
+    
+
 
 
 
